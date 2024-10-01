@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.46.22
+
+### Patch Changes
+
+- fix: omit size from Toggle ([`cbdc23136d7cbd57338fee3ae57fd0b347fcedd6`](https://github.com/themesberg/flowbite-svelte/commit/cbdc23136d7cbd57338fee3ae57fd0b347fcedd6))
+
+## 0.46.21
+
+### Patch Changes
+
+- types: add $Props ([`458b98eea93e1b9c82374d1727e057bf97d85930`](https://github.com/themesberg/flowbite-svelte/commit/458b98eea93e1b9c82374d1727e057bf97d85930))
+
+- types: component type updates types: Button and ToolbarButton update for using anchor and button, HTMLAnchorAttributes, HTMLButtonAttributes types: GradientButton uses import ButtonProps from "./Button.svelte" instead of using ComponentProps that does not work. ([`a1ba5af532261772bfd8b0b2c8267f65e814f997`](https://github.com/themesberg/flowbite-svelte/commit/a1ba5af532261772bfd8b0b2c8267f65e814f997))
+
+- fix: #1454 extends HTMLInputAttributes for Checkbox component ([`4ce2ced37a28885614ac1d863386e396f190a65e`](https://github.com/themesberg/flowbite-svelte/commit/4ce2ced37a28885614ac1d863386e396f190a65e))
+
+## 0.46.20
+
+### Patch Changes
+
+- types: add $Props ([`46a29798f77a63482a0951720eb761e474d11287`](https://github.com/themesberg/flowbite-svelte/commit/46a29798f77a63482a0951720eb761e474d11287))
+
+## 0.46.19
+
+### Patch Changes
+
+- types: add $Props ([`264f88f447592e81bb86ffd2f5202277c9b3116e`](https://github.com/themesberg/flowbite-svelte/commit/264f88f447592e81bb86ffd2f5202277c9b3116e))
+
+## 0.46.18
+
+### Patch Changes
+
+- bug fixes and features ([`bca44f8c500ea0b04215530b27e0cf460c5aa4b6`](https://github.com/themesberg/flowbite-svelte/commit/bca44f8c500ea0b04215530b27e0cf460c5aa4b6))
+
+## 0.46.17
+
+### Patch Changes
+
+- fix: update for PRs ([`3566cbe3dcc4a7d8f67456b07fe046cdab421a02`](https://github.com/themesberg/flowbite-svelte/commit/3566cbe3dcc4a7d8f67456b07fe046cdab421a02))
+
 ## 0.46.16
 
 ### Patch Changes

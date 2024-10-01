@@ -6,18 +6,32 @@
 </script>
 
 <script lang="ts">
+  import type { HTMLInputAttributes } from 'svelte/elements';
   import Wrapper from '$lib/utils/Wrapper.svelte';
   import { twMerge } from 'tailwind-merge';
-  import { getContext } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
   import type { InputType } from '../types';
+  import CloseButton from '$lib/utils/CloseButton.svelte';
 
-  export let type: InputType = 'text';
-  export let value: any = undefined;
-  export let size: FormSizeType | undefined = undefined;
-  export let defaultClass: string = 'block w-full disabled:cursor-not-allowed disabled:opacity-50 rtl:text-right';
-  export let color: 'base' | 'green' | 'red' = 'base';
-  export let floatClass: string = 'flex absolute inset-y-0 items-center text-gray-500 dark:text-gray-400';
+  interface $$Props extends Omit<HTMLInputAttributes,'size'> {
+    type?: InputType;
+    value?: any;
+    size?: FormSizeType;
+    clearable?: boolean;
+    defaultClass?: string;
+    color?: 'base' | 'green' | 'red';
+    floatClass?: string;
+  }
+  
+  export let type: $$Props['type'] = 'text';
+  export let value: $$Props['value'] = undefined;
+  export let size: $$Props['size'] = undefined;
+  export let clearable: $$Props['clearable'] = false;
+  export let defaultClass: $$Props['defaultClass'] = 'block w-full disabled:cursor-not-allowed disabled:opacity-50 rtl:text-right';
+  export let color: NonNullable<$$Props['color']> = 'base';
+  export let floatClass: $$Props['floatClass'] = 'flex absolute inset-y-0 items-center text-gray-500 dark:text-gray-400';
 
+  const dispatcher = createEventDispatcher();
   const borderClasses = {
     base: 'border border-gray-300 dark:border-gray-600',
     tinted: 'border border-gray-300 dark:border-gray-500',
@@ -52,11 +66,17 @@
   let inputClass: string;
   $: {
     const _color = color === 'base' && background ? 'tinted' : color;
-    inputClass = twMerge([defaultClass, inputPadding[_size], ($$slots.left && leftPadding[_size]) || ($$slots.right && rightPadding[_size]), ringClasses[color], colorClasses[_color], borderClasses[_color], textSizes[_size], group || 'rounded-lg', group && 'first:rounded-s-lg last:rounded-e-lg', group && '[&:not(:first-child)]:-ms-px', $$props.class]);
+    inputClass = twMerge([defaultClass, inputPadding[_size], ($$slots.left && leftPadding[_size]) || ((clearable || $$slots.right) && rightPadding[_size]), ringClasses[color], colorClasses[_color], borderClasses[_color], textSizes[_size], group || 'rounded-lg', group && 'first:rounded-s-lg last:rounded-e-lg', group && '[&:not(:first-child)]:-ms-px', $$props.class]);
   }
+
+  const clearAll = (e: MouseEvent) => {
+    e.stopPropagation();
+    value = undefined;
+    dispatcher('change');
+  };
 </script>
 
-<Wrapper class="relative w-full" show={$$slots.left || $$slots.right}>
+<Wrapper class="relative w-full" show>
   {#if $$slots.left}
     <div class="{twMerge(floatClass, $$props.classLeft)} start-0 ps-2.5 pointer-events-none">
       <slot name="left" />
@@ -65,19 +85,25 @@
   <slot props={{ ...$$restProps, class: inputClass }}>
     <input {...$$restProps} bind:value on:blur on:change on:click on:contextmenu on:focus on:keydown on:keypress on:keyup on:mouseover on:mouseenter on:mouseleave on:paste on:input {...{ type }} class={inputClass} />
   </slot>
-  {#if $$slots.right}
-    <div class="{twMerge(floatClass, $$props.classRight)} end-0 pe-2.5"><slot name="right" /></div>
-  {/if}
+  <div class="{twMerge(floatClass, $$props.classRight)} end-0 pe-2.5">
+    {#if $$slots.right}
+      <slot name="right"></slot>
+    {/if}
+    {#if clearable && value && `${value}`.length > 0}
+      <CloseButton {size} on:click={clearAll} color="none" class="p-0 focus:ring-gray-400 dark:text-white" />
+    {/if}
+  </div>
 </Wrapper>
 
 <!--
 @component
 [Go to docs](https://flowbite-svelte.com/)
 ## Props
-@prop export let type: InputType = 'text';
-@prop export let value: any = undefined;
-@prop export let size: FormSizeType | undefined = undefined;
-@prop export let defaultClass: string = 'block w-full disabled:cursor-not-allowed disabled:opacity-50 rtl:text-right';
-@prop export let color: 'base' | 'green' | 'red' = 'base';
-@prop export let floatClass: string = 'flex absolute inset-y-0 items-center text-gray-500 dark:text-gray-400';
+@prop export let type: $$Props['type'] = 'text';
+@prop export let value: $$Props['value'] = undefined;
+@prop export let size: $$Props['size'] = undefined;
+@prop export let clearable: $$Props['clearable'] = false;
+@prop export let defaultClass: $$Props['defaultClass'] = 'block w-full disabled:cursor-not-allowed disabled:opacity-50 rtl:text-right';
+@prop export let color: NonNullable<$$Props['color']> = 'base';
+@prop export let floatClass: $$Props['floatClass'] = 'flex absolute inset-y-0 items-center text-gray-500 dark:text-gray-400';
 -->

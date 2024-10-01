@@ -3,17 +3,32 @@
   import { twMerge } from 'tailwind-merge';
   import { CloseButton } from '$lib';
   import type { ColorVariant } from '../types';
-  import { fade } from 'svelte/transition';
+  import type { HTMLAttributes } from 'svelte/elements';
+  import { fade, type TransitionConfig } from 'svelte/transition';
+
+  type TransitionFunc = (node: HTMLElement, params: any) => TransitionConfig;
+
   const dispatcher = createEventDispatcher();
 
-  export let color: ColorVariant = 'primary';
-  export let large: boolean = false;
-  export let dismissable: boolean = false;
-  export let border: boolean = false;
-  export let href: string = '';
-  export let rounded: boolean = false;
-  export let transition = fade;
-  export let params = {};
+  interface $$Props extends HTMLAttributes<HTMLDivElement> {
+    color?: ColorVariant;
+    large?: boolean;
+    dismissable?: boolean;
+    border?: boolean;
+    href?: string;
+    rounded?: boolean;
+    transition?: TransitionFunc;
+    params?: object;
+  }
+
+  export let color: NonNullable<$$Props['color']> = 'primary';
+  export let large: $$Props['large'] = false;
+  export let dismissable: $$Props['dismissable'] = false;
+  export let border: $$Props['border'] = false;
+  export let href: $$Props['href'] = '';
+  export let rounded: $$Props['rounded'] = false;
+  export let transition: NonNullable<$$Props['transition']> = fade;
+  export let params: $$Props['params'] = {};
 
   let badgeStatus: boolean = true;
 
@@ -94,12 +109,12 @@
 @component
 [Go to docs](https://flowbite-svelte.com/)
 ## Props
-@prop export let color: ColorVariant = 'primary';
-@prop export let large: boolean = false;
-@prop export let dismissable: boolean = false;
-@prop export let border: boolean = false;
-@prop export let href: string = '';
-@prop export let rounded: boolean = false;
-@prop export let transition = fade;
-@prop export let params = {};
+@prop export let color: NonNullable<$$Props['color']> = 'primary';
+@prop export let large: $$Props['large'] = false;
+@prop export let dismissable: $$Props['dismissable'] = false;
+@prop export let border: $$Props['border'] = false;
+@prop export let href: $$Props['href'] = '';
+@prop export let rounded: $$Props['rounded'] = false;
+@prop export let transition: NonNullable<$$Props['transition']> = fade;
+@prop export let params: $$Props['params'] = {};
 -->

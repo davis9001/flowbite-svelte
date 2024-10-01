@@ -13,8 +13,8 @@
     partialId?: string;
     icon?: ComponentType;
     count?: boolean;
-    iconFillColor?: string;
-    iconStrokeColor?: string;
+    iconFillColor?: string | undefined;
+    iconStrokeColor?: string | undefined;
   }
 
   export let divClass: $$Props['divClass'] = 'flex items-center';
@@ -24,8 +24,8 @@
   export let partialId: $$Props['partialId'] = 'partialStar' + generateId();
   export let icon: $$Props['icon'] = Star;
   export let count: $$Props['count'] = false;
-  export let iconFillColor: $$Props['iconFillColor'];
-  export let iconStrokeColor: $$Props['iconStrokeColor'];
+  export let iconFillColor: $$Props['iconFillColor'] = '#F5CA14';
+  export let iconStrokeColor: $$Props['iconStrokeColor'] = '#F5CA14';
 
   // generate unique id for full star and gray star
   const fullStarId: string = generateId();
@@ -62,11 +62,13 @@
 @component
 [Go to docs](https://flowbite-svelte.com/)
 ## Props
-@prop export let divClass: string = 'flex items-center';
-@prop export let size: number = 24;
-@prop export let total: number = 5;
-@prop export let rating: number = 4;
-@prop export let partialId: string = 'partialStar' + generateId();
-@prop export let icon: ComponentType = Star;
-@prop export let count: boolean = false;
+@prop export let divClass: $$Props['divClass'] = 'flex items-center';
+@prop export let size: $$Props['size'] = 24;
+@prop export let total: NonNullable<$$Props['total']> = 5;
+@prop export let rating: $$Props['rating'] = 4;
+@prop export let partialId: $$Props['partialId'] = 'partialStar' + generateId();
+@prop export let icon: $$Props['icon'] = Star;
+@prop export let count: $$Props['count'] = false;
+@prop export let iconFillColor: $$Props['iconFillColor'] = '#F5CA14';
+@prop export let iconStrokeColor: $$Props['iconStrokeColor'] = '#F5CA14';
 -->
